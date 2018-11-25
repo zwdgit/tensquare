@@ -29,8 +29,17 @@ public class EnterpriseController {
 
 	@Autowired
 	private EnterpriseService enterpriseService;
-	
-	
+
+    /**
+     * 查询热门企业
+     * @return
+     */
+	@RequestMapping(value = "/search/hotlist",method = RequestMethod.GET)
+	public Result hotList() {
+        List<Enterprise> list = enterpriseService.hotList("1");
+        return new Result(true,StatusCode.OK,"查询成功",list);
+    }
+
 	/**
 	 * 查询全部数据
 	 * @return
@@ -39,7 +48,7 @@ public class EnterpriseController {
 	public Result findAll(){
 		return new Result(true,StatusCode.OK,"查询成功",enterpriseService.findAll());
 	}
-	
+
 	/**
 	 * 根据ID查询
 	 * @param id ID
@@ -73,7 +82,7 @@ public class EnterpriseController {
     public Result findSearch( @RequestBody Map searchMap){
         return new Result(true,StatusCode.OK,"查询成功",enterpriseService.findSearch(searchMap));
     }
-	
+
 	/**
 	 * 增加
 	 * @param enterprise
@@ -83,7 +92,7 @@ public class EnterpriseController {
 		enterpriseService.add(enterprise);
 		return new Result(true,StatusCode.OK,"增加成功");
 	}
-	
+
 	/**
 	 * 修改
 	 * @param enterprise
@@ -91,10 +100,10 @@ public class EnterpriseController {
 	@RequestMapping(value="/{id}",method= RequestMethod.PUT)
 	public Result update(@RequestBody Enterprise enterprise, @PathVariable String id ){
 		enterprise.setId(id);
-		enterpriseService.update(enterprise);		
+		enterpriseService.update(enterprise);
 		return new Result(true,StatusCode.OK,"修改成功");
 	}
-	
+
 	/**
 	 * 删除
 	 * @param id
@@ -104,5 +113,5 @@ public class EnterpriseController {
 		enterpriseService.deleteById(id);
 		return new Result(true,StatusCode.OK,"删除成功");
 	}
-	
+
 }

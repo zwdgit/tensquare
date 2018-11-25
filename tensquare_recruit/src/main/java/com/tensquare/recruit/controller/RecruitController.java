@@ -29,8 +29,18 @@ public class RecruitController {
 
 	@Autowired
 	private RecruitService recruitService;
-	
-	
+
+	@RequestMapping(value = "/search/recommend", method = RequestMethod.GET)
+	public Result recommend() {
+        List<Recruit> list = recruitService.recommend();
+        return new Result(true, StatusCode.OK, "查询成功", list);
+    }
+
+    @RequestMapping(value = "/search/newlist", method = RequestMethod.GET)
+	public Result newList() {
+        List<Recruit> list = recruitService.newList();
+        return new Result(true, StatusCode.OK, "查询成功", list);
+    }
 	/**
 	 * 查询全部数据
 	 * @return
@@ -39,7 +49,7 @@ public class RecruitController {
 	public Result findAll(){
 		return new Result(true,StatusCode.OK,"查询成功",recruitService.findAll());
 	}
-	
+
 	/**
 	 * 根据ID查询
 	 * @param id ID
@@ -73,7 +83,7 @@ public class RecruitController {
     public Result findSearch( @RequestBody Map searchMap){
         return new Result(true,StatusCode.OK,"查询成功",recruitService.findSearch(searchMap));
     }
-	
+
 	/**
 	 * 增加
 	 * @param recruit
@@ -83,7 +93,7 @@ public class RecruitController {
 		recruitService.add(recruit);
 		return new Result(true,StatusCode.OK,"增加成功");
 	}
-	
+
 	/**
 	 * 修改
 	 * @param recruit
@@ -91,10 +101,10 @@ public class RecruitController {
 	@RequestMapping(value="/{id}",method= RequestMethod.PUT)
 	public Result update(@RequestBody Recruit recruit, @PathVariable String id ){
 		recruit.setId(id);
-		recruitService.update(recruit);		
+		recruitService.update(recruit);
 		return new Result(true,StatusCode.OK,"修改成功");
 	}
-	
+
 	/**
 	 * 删除
 	 * @param id
@@ -104,5 +114,5 @@ public class RecruitController {
 		recruitService.deleteById(id);
 		return new Result(true,StatusCode.OK,"删除成功");
 	}
-	
+
 }

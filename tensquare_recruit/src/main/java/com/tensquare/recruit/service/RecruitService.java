@@ -26,7 +26,7 @@ import com.tensquare.recruit.pojo.Recruit;
 
 /**
  * 服务层
- * 
+ *
  * @author Administrator
  *
  */
@@ -35,9 +35,17 @@ public class RecruitService {
 
 	@Autowired
 	private RecruitDao recruitDao;
-	
+
 	@Autowired
 	private IdWorker idWorker;
+
+    public List<Recruit> recommend() {
+        return recruitDao.findTop6ByStateOrderByCreatetime("2");
+    }
+
+    public List<Recruit> newList() {
+        return recruitDao.findTop6ByStateNotOrderByCreatetimeDesc("0");
+    }
 
 	/**
 	 * 查询全部列表
@@ -47,7 +55,7 @@ public class RecruitService {
 		return recruitDao.findAll();
 	}
 
-	
+
 	/**
 	 * 条件查询+分页
 	 * @param whereMap
@@ -61,7 +69,7 @@ public class RecruitService {
 		return recruitDao.findAll(specification, pageRequest);
 	}
 
-	
+
 	/**
 	 * 条件查询
 	 * @param whereMap
@@ -170,7 +178,7 @@ public class RecruitService {
                 if (searchMap.get("content2")!=null && !"".equals(searchMap.get("content2"))) {
                 	predicateList.add(cb.like(root.get("content2").as(String.class), "%"+(String)searchMap.get("content2")+"%"));
                 }
-				
+
 				return cb.and( predicateList.toArray(new Predicate[predicateList.size()]));
 
 			}

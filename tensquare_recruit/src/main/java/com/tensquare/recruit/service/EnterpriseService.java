@@ -26,7 +26,7 @@ import com.tensquare.recruit.pojo.Enterprise;
 
 /**
  * 服务层
- * 
+ *
  * @author Administrator
  *
  */
@@ -35,10 +35,14 @@ public class EnterpriseService {
 
 	@Autowired
 	private EnterpriseDao enterpriseDao;
-	
+
 	@Autowired
 	private IdWorker idWorker;
 
+
+	public List<Enterprise> hotList(String ishost) {
+        return enterpriseDao.findByIshot(ishost);
+    }
 	/**
 	 * 查询全部列表
 	 * @return
@@ -47,7 +51,7 @@ public class EnterpriseService {
 		return enterpriseDao.findAll();
 	}
 
-	
+
 	/**
 	 * 条件查询+分页
 	 * @param whereMap
@@ -61,7 +65,7 @@ public class EnterpriseService {
 		return enterpriseDao.findAll(specification, pageRequest);
 	}
 
-	
+
 	/**
 	 * 条件查询
 	 * @param whereMap
@@ -154,7 +158,7 @@ public class EnterpriseService {
                 if (searchMap.get("url")!=null && !"".equals(searchMap.get("url"))) {
                 	predicateList.add(cb.like(root.get("url").as(String.class), "%"+(String)searchMap.get("url")+"%"));
                 }
-				
+
 				return cb.and( predicateList.toArray(new Predicate[predicateList.size()]));
 
 			}

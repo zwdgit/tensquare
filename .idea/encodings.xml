@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tensquare_article" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tensquare_article" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tensquare_base" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tensquare_common" charset="UTF-8" />
@@ -10,8 +9,6 @@
     <file url="file://$PROJECT_DIR$/tensquare_gathering" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tensquare_qa" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tensquare_recruit" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tensquare_recruit" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tensquare_user" charset="UTF-8" />
-    <file url="file://$USER_HOME$/视频/十次方/黑马最新java《十次方》社交项目/十次方微服务day03/tensquare_parent52/tensquare_article" charset="UTF-8" />
   </component>
 </project>
