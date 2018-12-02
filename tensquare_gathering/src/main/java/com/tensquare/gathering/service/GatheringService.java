@@ -13,6 +13,8 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -26,7 +28,7 @@ import com.tensquare.gathering.pojo.Gathering;
 
 /**
  * 服务层
- * 
+ *
  * @author Administrator
  *
  */
@@ -35,7 +37,7 @@ public class GatheringService {
 
 	@Autowired
 	private GatheringDao gatheringDao;
-	
+
 	@Autowired
 	private IdWorker idWorker;
 
@@ -47,7 +49,7 @@ public class GatheringService {
 		return gatheringDao.findAll();
 	}
 
-	
+
 	/**
 	 * 条件查询+分页
 	 * @param whereMap
@@ -61,7 +63,7 @@ public class GatheringService {
 		return gatheringDao.findAll(specification, pageRequest);
 	}
 
-	
+
 	/**
 	 * 条件查询
 	 * @param whereMap
@@ -77,6 +79,7 @@ public class GatheringService {
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(value = "gathering", key = "#id")
 	public Gathering findById(String id) {
 		return gatheringDao.findById(id).get();
 	}
@@ -94,6 +97,7 @@ public class GatheringService {
 	 * 修改
 	 * @param gathering
 	 */
+	@CacheEvict(value = "gathering", key = "#gathering.id")
 	public void update(Gathering gathering) {
 		gatheringDao.save(gathering);
 	}
@@ -102,7 +106,8 @@ public class GatheringService {
 	 * 删除
 	 * @param id
 	 */
-	public void deleteById(String id) {
+    @CacheEvict(value = "gathering", key = "#id")
+    public void deleteById(String id) {
 		gatheringDao.deleteById(id);
 	}
 
@@ -154,7 +159,7 @@ public class GatheringService {
                 if (searchMap.get("city")!=null && !"".equals(searchMap.get("city"))) {
                 	predicateList.add(cb.like(root.get("city").as(String.class), "%"+(String)searchMap.get("city")+"%"));
                 }
-				
+
 				return cb.and( predicateList.toArray(new Predicate[predicateList.size()]));
 
 			}

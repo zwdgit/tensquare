@@ -95,7 +95,16 @@ public class ArticleService {
      * @return
      */
     public Article findById(String id) {
-        return articleDao.findById(id).get();
+        // 先从缓存中查询对象
+        Article article = (Article) redisTemplate.opsForValue().get("article_" + id);
+        // 如果没有取到
+        if (article == null) {
+            // 从数据库中查询
+            article = articleDao.findById(id).get();
+            // 存入到缓存中
+            redisTemplate.opsForValue().set("article_" + id, article);
+        }
+        return article;
     }
 
     /**
@@ -114,6 +123,7 @@ public class ArticleService {
      * @param article
      */
     public void update(Article article) {
+        redisTemplate.delete("article_" + article.getId());
         articleDao.save(article);
     }
 
@@ -123,6 +133,7 @@ public class ArticleService {
      * @param id
      */
     public void deleteById(String id) {
+        redisTemplate.delete("article_" + id);
         articleDao.deleteById(id);
     }
 
